@@ -1,548 +1,314 @@
-// Cart, payment, testimonial and other unrelated scripts start here
+// --- 1. DATABASE PRODUK DEFAULT (LENGKAP + STOK) ---
+const defaultProducts = [
+    // === VPS (Ada Stok) ===
+    { 
+        id: 'vps1', category: 'vps', name: 'BASIC VPS 1', price: 15000, stock: 10,
+        desc: "✅ RAM: 1GB Dedicated\n✅ CPU: 1 Core High Performance\n✅ Storage: 20GB NVMe SSD\n✅ Bandwidth: 1TB\n✅ OS: Linux (Ubuntu/Debian/CentOS)\n🚀 Cocok untuk: Tunneling, Bot Ringan." 
+    },
+    { 
+        id: 'vps2', category: 'vps', name: 'BASIC VPS 2', price: 25000, stock: 15,
+        desc: "✅ RAM: 2GB Dedicated\n✅ CPU: 1 Core High Performance\n✅ Storage: 50GB NVMe SSD\n✅ Bandwidth: 2TB\n✅ Akses Root Full Control\n🚀 Cocok untuk: Hosting Web Kecil, VPN Pribadi." 
+    },
+    { 
+        id: 'vps3', category: 'vps', name: 'BASIC VPS 3', price: 30000, stock: 8,
+        desc: "✅ RAM: 2GB Dedicated\n✅ CPU: 2 Core (Multithread)\n✅ Storage: 50GB NVMe SSD\n✅ Bandwidth: 2TB\n✅ Anti-DDoS Basic\n🚀 Cocok untuk: Script Multiprocess, Database." 
+    },
+    { 
+        id: 'vps4', category: 'vps', name: 'STANDARD VPS', price: 35000, stock: 20, recommend: true,
+        desc: "🔥 BEST SELLER!\n✅ RAM: 4GB Dedicated\n✅ CPU: 2 Core High Performance\n✅ Storage: 80GB NVMe SSD\n✅ Bandwidth: 4TB\n✅ Support Docker\n🚀 Cocok untuk: Game Server (MCPE/SAMP), Bot Music, Store Online." 
+    },
+    { 
+        id: 'vps5', category: 'vps', name: 'HIGH VPS 1', price: 45000, stock: 5,
+        desc: "✅ RAM: 8GB Dedicated\n✅ CPU: 4 Core Extreme\n✅ Storage: 160GB NVMe SSD\n✅ Bandwidth: 5TB\n✅ Virtualisasi KVM\n🚀 Cocok untuk: Server Minecraft Java, Website Traffic Tinggi." 
+    },
+    { 
+        id: 'vps6', category: 'vps', name: 'HIGH VPS 2', price: 70000, stock: 3,
+        desc: "✅ RAM: 16GB Dedicated\n✅ CPU: 4 Core Extreme\n✅ Storage: 240GB NVMe SSD\n✅ Bandwidth: 5TB\n✅ Network 1Gbps\n🚀 Cocok untuk: Komunitas Game Besar, App Server Berat." 
+    },
 
-// Utility function to convert Rupiah price string to number
-function rupiahToNumber(rupiahStr) {
-    return parseInt(rupiahStr.replace(/[^\d]/g, '')) || 0;
+    // === PANEL PTERODACTYL (Ada Stok - LENGKAP 1-9) ===
+    { 
+        id: 'pnl1', category: 'panel', name: 'PANEL HEMAT 1GB', price: 1000, stock: 50,
+        desc: "🔹 RAM: 1GB\n🔹 CPU: 35%\n🔹 Disk: 1GB\n🔹 Server: Indonesia\n✨ Cocok untuk coba-coba atau script bot sangat ringan." 
+    },
+    { 
+        id: 'pnl2', category: 'panel', name: 'PANEL HEMAT 2GB', price: 2000, stock: 50,
+        desc: "🔹 RAM: 2GB\n🔹 CPU: 50%\n🔹 Disk: 2GB\n🔹 Server: Indonesia\n✨ Cocok untuk Bot WhatsApp Single Session." 
+    },
+    { 
+        id: 'pnl3', category: 'panel', name: 'PANEL HEMAT 3GB', price: 3000, stock: 40,
+        desc: "🔹 RAM: 3GB\n🔹 CPU: 95%\n🔹 Disk: 3GB\n🔹 Server: Indonesia\n✨ Stabil untuk Bot Discord atau WA Multi-Device." 
+    },
+    { 
+        id: 'pnl4', category: 'panel', name: 'PANEL HEMAT 4GB', price: 4000, stock: 30,
+        desc: "🔹 RAM: 4GB\n🔹 CPU: 110%\n🔹 Disk: 4GB\n🔹 Server: Singapore\n✨ Kuat untuk menjalankan 2-3 script bot sekaligus." 
+    },
+    { 
+        id: 'pnl5', category: 'panel', name: 'PANEL STANDAR 5GB', price: 5000, stock: 25,
+        desc: "🔹 RAM: 5GB\n🔹 CPU: 135%\n🔹 Disk: 5GB\n🔹 Server: Singapore Premium\n✨ Rekomendasi untuk Server SAMP/MTA dengan player sedang." 
+    },
+    { 
+        id: 'pnl6', category: 'panel', name: 'PANEL STANDAR 6GB', price: 6000, stock: 20,
+        desc: "🔹 RAM: 6GB\n🔹 CPU: 160%\n🔹 Disk: 6GB\n🔹 Server: Singapore Premium\n✨ Performa tinggi untuk kebutuhan hosting medium." 
+    },
+    { 
+        id: 'pnl7', category: 'panel', name: 'PANEL STANDAR 7GB', price: 7000, stock: 20,
+        desc: "🔹 RAM: 7GB\n🔹 CPU: 185%\n🔹 Disk: 7GB\n🔹 Server: Singapore Premium\n✨ Cocok untuk Bot Music High Quality Audio." 
+    },
+    { 
+        id: 'pnl8', category: 'panel', name: 'PANEL TURBO 8GB', price: 8000, stock: 15,
+        desc: "🔹 RAM: 8GB\n🔹 CPU: 200%\n🔹 Disk: 8GB\n🔹 Server: Singapore Premium\n✨ Sangat lancar untuk Minecraft PE server kecil." 
+    },
+    { 
+        id: 'pnl9', category: 'panel', name: 'PANEL TURBO 9GB', price: 9000, stock: 15,
+        desc: "🔹 RAM: 9GB\n🔹 CPU: 300%\n🔹 Disk: 9GB\n🔹 Performa Stabil & Cepat\n✨ Pilihan terbaik sebelum upgrade ke Unlimited." 
+    },
+
+    // === PANEL PREMIUM ===
+    { 
+        id: 'prem1', category: 'panel', name: 'PANEL UNLIMITED', price: 10000, stock: 10, recommend: true,
+        desc: "👑 KHUSUS SULTAN\n♾️ RAM: Unlimited\n♾️ CPU: Unlimited\n♾️ Disk: Unlimited\n🛡️ Garansi Anti Suspend (S&K)\n✨ Bebas deploy apa saja sepuasnya!" 
+    },
+    { 
+        id: 'prem2', category: 'panel', name: 'RESELLER PANEL', price: 15000, stock: 5,
+        desc: "💼 PAKET USAHA 1\n✅ Dapat Akun Reseller\n✅ Bisa Membuat Panel Sendiri\n✅ Bisa Jual Panel ke Orang Lain\n💰 Cocok untuk pemula bisnis hosting." 
+    },
+    { 
+        id: 'prem3', category: 'panel', name: 'ADMIN PANEL', price: 20000, stock: 5, recommend: true,
+        desc: "💼 PAKET USAHA 2\n✅ Dapat Akun Admin Panel\n✅ Full Akses Create/Delete Server\n✅ Bisa Open Reseller Panel\n💰 Potensi Balik Modal Sangat Cepat!" 
+    },
+    { 
+        id: 'prem4', category: 'panel', name: 'OWNER PANEL', price: 25000, stock: 3,
+        desc: "🏢 TINGKAT TERTINGGI\n✅ Akses Panel Owner\n✅ Bisa Bikin Admin & Reseller\n✅ Full Control Resource Server\n✅ Prioritas Support." 
+    },
+    { 
+        id: 'prem5', category: 'panel', name: 'PT PANEL (PARTNER)', price: 35000, stock: 2, recommend: true,
+        desc: "🤝 PAKET PARTNER\n✅ Join Manajemen\n✅ Akses Database Panel\n✅ Bebas Pasang Iklan di Panel\n✅ Full Support Teknis." 
+    },
+
+    // === JASA LAINNYA (UNLIMITED STOK) ===
+    { id: 'oth1', category: 'other', name: 'JASA INSTALL PANEL', price: 10000, desc: "🛠️ Terima Beres!\nKami instalkan Panel Pterodactyl di VPS Anda.\nTermasuk konfigurasi Domain & SSL (HTTPS)." },
+    { id: 'oth2', category: 'other', name: 'BASH AUTOSCRIPT', price: 15000, desc: "📜 Script Auto Install\nBuat Panel Pterodactyl sendiri hanya dengan 1 baris perintah.\nSupport Ubuntu 20.04/22.04." },
+    { id: 'oth3', category: 'other', name: 'FIX ERROR SCRIPT', price: 7000, desc: "🔧 Bot Anda Error?\nKami bantu perbaiki error pada script Bot WA/Telegram/Discord.\nHarga tergantung tingkat kesulitan." },
+    { id: 'oth4', category: 'other', name: 'JASA RENAME SC', price: 20000, desc: "✏️ Rebranding Script\nGanti nama author, credit, dan tampilan script bot agar terlihat seperti milik Anda sendiri." },
+    { id: 'oth5', category: 'other', name: 'PEMBUATAN WEBSITE', price: 30000, desc: "🌐 Website Profesional\nLanding Page, Top Up Game, atau Company Profile.\nDesain Responsif & Modern." }
+];
+
+// --- 2. LOGIC RENDER PRODUK (DENGAN TAMPILAN STOK) ---
+function initProducts() {
+    // Jika data kosong atau kurang dari 10 (data lama), reset ke yang baru & lengkap
+    if (!localStorage.getItem('products') || JSON.parse(localStorage.getItem('products')).length < 10) {
+        localStorage.setItem('products', JSON.stringify(defaultProducts));
+    }
 }
 
-// Add class "standard-product" to service-item divs where the select has "Standard" option selected by default
-document.addEventListener('DOMContentLoaded', () => {
-  const serviceItems = document.querySelectorAll('.service-item');
-  serviceItems.forEach(item => {
-    const select = item.querySelector('select.spec-select');
-    if (select) {
-      if (select.value === 'Standard') {
-        item.classList.add('standard-product');
-      }
-      // Also listen for changes to update the class dynamically
-      select.addEventListener('change', () => {
-        if (select.value === 'Standard') {
-          item.classList.add('standard-product');
-        } else {
-          item.classList.remove('standard-product');
+function renderProducts() {
+    initProducts();
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    
+    const vpsContainer = document.getElementById('vps-list');
+    const panelContainer = document.getElementById('panel-list');
+    const otherContainer = document.getElementById('other-list');
+
+    if(vpsContainer) vpsContainer.innerHTML = '';
+    if(panelContainer) panelContainer.innerHTML = '';
+    if(otherContainer) otherContainer.innerHTML = '';
+
+    products.forEach((p) => {
+        const productData = JSON.stringify(p).replace(/"/g, '"');
+        const shortDesc = p.desc.split('\n')[0]; 
+
+        // Logika Tampilan Stok
+        let stockDisplay = '';
+        let buttonState = '';
+        let buttonText = 'BELI SEKARANG';
+        let stockClass = 'stock-ready';
+
+        // Hanya VPS dan Panel yang punya stok
+        if (p.category !== 'other') {
+            if (p.stock && p.stock > 0) {
+                stockDisplay = `<div style="position:absolute; top:10px; right:10px; background:#27ae60; color:white; padding:2px 8px; border-radius:10px; font-size:0.8rem; font-weight:bold;">Stok: ${p.stock}</div>`;
+            } else {
+                stockDisplay = `<div style="position:absolute; top:10px; right:10px; background:#e74c3c; color:white; padding:2px 8px; border-radius:10px; font-size:0.8rem; font-weight:bold;">HABIS</div>`;
+                buttonState = 'disabled style="background:#ccc; cursor:not-allowed;"';
+                buttonText = 'STOK HABIS';
+                stockClass = 'stock-empty';
+            }
         }
-      });
-    }
-  });
-});
 
-// Utility function to convert number to formatted USD string
-function numberToUSD(number) {
-    const rate = 15000; // Example conversion rate: 1 USD = 15000 IDR
-    const usd = number / rate;
-    return '$' + usd.toFixed(2);
-}
+        const itemHtml = `
+            <div class="service-item ${p.recommend ? 'recommend' : ''} ${stockClass}" style="position:relative;">
+                ${stockDisplay}
+                <h3>${p.name}</h3>
+                <h4 style="color:#27ae60; text-align:center; margin:5px 0; font-size:1.2rem;">${formatCurrency(p.price)}</h4>
+                <p style="text-align:center; color:#666;">${shortDesc}...</p>
+                
+                <div style="margin-top:auto;">
+                    <button class="order-btn" onclick="addToCart('${p.name}', ${p.price}, '${p.category}', ${p.stock})" ${buttonState}>${buttonText}</button>
+                    <button class="detail-btn" onclick='openDetailModal(${productData})'>LIHAT DETAIL</button>
+                </div>
+            </div>
+        `;
 
-// Function to append USD price next to Rupiah price in text
-function appendUSDPrice(text) {
-    const match = text.match(/Rp\s?([\d\.]+)/);
-    if (match) {
-        const rupiahStr = match[1];
-        const rupiahNumber = rupiahToNumber(rupiahStr);
-        const usdStr = numberToUSD(rupiahNumber);
-        // Remove existing USD price if any
-        const cleanText = text.replace(/\s*\(\$[\d\.]+\)/, '');
-        return cleanText + ' (' + usdStr + ')';
-    }
-    return text;
-}
-
-// Update all product prices and dropdown options to show USD price alongside Rupiah
-function updatePricesWithUSD() {
-    // Update h3 headings in service items
-    const serviceHeadings = document.querySelectorAll('.service-item h3');
-    serviceHeadings.forEach(h3 => {
-        h3.textContent = appendUSDPrice(h3.textContent);
-    });
-
-    // Update options in specification selects
-    const specSelects = document.querySelectorAll('.spec-select');
-    specSelects.forEach(select => {
-        for (let i = 0; i < select.options.length; i++) {
-            const option = select.options[i];
-            option.text = appendUSDPrice(option.text);
-        }
+        if (p.category === 'vps' && vpsContainer) vpsContainer.innerHTML += itemHtml;
+        else if (p.category === 'panel' && panelContainer) panelContainer.innerHTML += itemHtml;
+        else if (p.category === 'other' && otherContainer) otherContainer.innerHTML += itemHtml;
     });
 }
 
-// Format number as currency in IDR
-function formatCurrency(num) {
-    return num.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
-}
-
-// Show automatic message notifications
-function showMessage(message, type = 'info') {
-    // type can be 'info', 'success', 'error'
-    let messageDiv = document.getElementById('auto-message');
-    if (!messageDiv) {
-        messageDiv = document.createElement('div');
-        messageDiv.id = 'auto-message';
-        messageDiv.style.position = 'fixed';
-        messageDiv.style.top = '20px';
-        messageDiv.style.right = '20px';
-        messageDiv.style.padding = '15px 25px';
-        messageDiv.style.borderRadius = '5px';
-        messageDiv.style.zIndex = '1000';
-        messageDiv.style.fontWeight = 'bold';
-        messageDiv.style.color = '#fff';
-        messageDiv.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-        document.body.appendChild(messageDiv);
-    }
-    messageDiv.textContent = message;
-    if (type === 'success') {
-        messageDiv.style.backgroundColor = '#28a745';
-    } else if (type === 'error') {
-        messageDiv.style.backgroundColor = '#dc3545';
-    } else {
-        messageDiv.style.backgroundColor = '#007bff';
-    }
-    messageDiv.style.display = 'block';
-    setTimeout(() => {
-        messageDiv.style.display = 'none';
-    }, 4000);
-}
-
-// Global variables
-const paymentMethods = document.querySelectorAll('.payment-methods img');
-const paymentSuccess = document.getElementById('payment-success');
+// --- 3. LOGIKA KERANJANG (VALIDASI STOK) ---
 const cartTableBody = document.querySelector('#cart-table tbody');
 const totalPriceElement = document.getElementById('total-price');
-const orderButtons = document.querySelectorAll('button.order-btn');
+const cartBadge = document.getElementById('cart-badge');
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-let cart = [];
+function addToCart(name, price, category, currentStock) {
+    // Cek Stok untuk VPS/Panel
+    if (category !== 'other') {
+        const itemInCart = cart.find(item => item.service === name);
+        const quantityInCart = itemInCart ? itemInCart.quantity : 0;
+        
+        if (quantityInCart >= currentStock) {
+            alert("Maaf, stok produk ini sudah habis!");
+            return;
+        }
+    }
 
-// Update the cart display
+    const existingItem = cart.find(item => item.service === name);
+    if(existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ service: name, price: price, quantity: 1 });
+    }
+    saveCart();
+    updateCart();
+    
+    // Efek Tombol
+    const btn = event.target;
+    if(btn && btn.tagName === 'BUTTON') {
+        const originalText = btn.innerText;
+        btn.innerText = "✓ Masuk";
+        btn.style.background = "#27ae60";
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.background = "";
+        }, 1000);
+    }
+}
+
+// --- 4. FUNGSI UTILITAS STANDAR ---
+function formatCurrency(num) {
+    return parseInt(num).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+}
+
 function updateCart() {
+    if(!cartTableBody) return;
     cartTableBody.innerHTML = '';
-    let total = 0;
-
+    let total = 0; let totalItems = 0;
     cart.forEach((item, index) => {
         const row = document.createElement('tr');
-
-        const serviceCell = document.createElement('td');
-        serviceCell.textContent = item.service;
-        row.appendChild(serviceCell);
-
-        const quantityCell = document.createElement('td');
-        quantityCell.textContent = item.quantity;
-        row.appendChild(quantityCell);
-
-        const priceCell = document.createElement('td');
-        const itemTotalPrice = item.price * item.quantity;
-        priceCell.textContent = formatCurrency(itemTotalPrice);
-        row.appendChild(priceCell);
-
-        const actionCell = document.createElement('td');
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Hapus';
-        removeBtn.addEventListener('click', () => {
-            if (confirm(`Apakah Anda yakin ingin menghapus layanan "${item.service}" dari keranjang?`)) {
-                cart.splice(index, 1);
-                saveCart();
-                updateCart();
-                updatePaymentAvailability();
-                showMessage(`Layanan "${item.service}" dihapus dari keranjang.`, 'info');
-                updatePaymentAmount();
-            }
-        });
-        actionCell.appendChild(removeBtn);
-        row.appendChild(actionCell);
-
+        row.innerHTML = `<td>${item.service}</td><td>${item.quantity}</td><td>${formatCurrency(item.price * item.quantity)}</td><td><button onclick="removeItem(${index})" style="background:#e74c3c; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Hapus</button></td>`;
         cartTableBody.appendChild(row);
-
-        total += itemTotalPrice;
+        total += item.price * item.quantity; totalItems += item.quantity;
     });
-
-    totalPriceElement.textContent = formatCurrency(total);
-
-    updatePaymentAvailability();
-    updatePaymentAmount();
+    if(totalPriceElement) totalPriceElement.textContent = formatCurrency(total);
+    if(cartBadge) { cartBadge.textContent = totalItems; cartBadge.style.display = totalItems > 0 ? 'inline-block' : 'none'; }
+    updatePaymentAmount(); 
 }
 
-// Save cart to localStorage
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+function removeItem(index) { cart.splice(index, 1); saveCart(); updateCart(); }
+function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+function updatePaymentAmount() { 
+    const d = document.getElementById('total-to-pay'); 
+    if(d) { 
+        let t = cart.reduce((s, i) => s + (i.price * i.quantity), 0); 
+        d.textContent = "Total Tagihan: " + formatCurrency(t); 
+    } 
 }
 
-// Load cart from localStorage
-function loadCart() {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-        cart = JSON.parse(storedCart);
-    }
-    updateCart();
-    updatePaymentAvailability();
-    updatePaymentAmount();
+function trackVisitor() { 
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) { 
+        let v = localStorage.getItem('total_visits') || 0; 
+        if (!sessionStorage.getItem('has_visited')) { 
+            v = parseInt(v) + 1; 
+            localStorage.setItem('total_visits', v); 
+            sessionStorage.setItem('has_visited', 'true'); 
+        } 
+    } 
 }
 
-// Update payment amount on payment page
-function updatePaymentAmount() {
-    const paymentAmountElement = document.getElementById('payment-amount');
-    if (!paymentAmountElement) return;
+function openDetailModal(product) { 
+    const m = document.getElementById('product-detail-modal'); 
+    if(!m)return; 
+    document.getElementById('modal-prod-name').innerText=product.name; 
+    document.getElementById('modal-prod-price').innerText=formatCurrency(product.price); 
+    document.getElementById('modal-prod-desc').innerText=product.desc; 
+    const btn=document.getElementById('modal-add-btn'); 
+    btn.onclick=()=>{addToCart(product.name, product.price, product.category, product.stock); closeDetailModal();}; 
+    m.style.display='flex'; 
+}
 
-    let total = 0;
-    cart.forEach(item => {
-        total += item.price * (item.quantity || 1);
-    });
+function closeDetailModal() { document.getElementById('product-detail-modal').style.display='none'; }
+window.onclick = function(e) { const m = document.getElementById('product-detail-modal'); if(e.target==m) m.style.display="none"; }
 
-    // Update localStorage with total price for payment page
-    localStorage.setItem('totalPrice', total.toString());
+// --- 5. CHATBOT HYBRID (MANUAL FALLBACK + AI) ---
+function getFallbackResponse(text) {
+    text = text.toLowerCase();
+    if (text.includes('harga') || text.includes('biaya')) return "Untuk harga lengkap, silakan cek daftar layanan di halaman utama website kami.";
+    if (text.includes('cara') && text.includes('beli')) return "Klik tombol 'BELI SEKARANG' pada produk yang diinginkan, lalu lanjut ke pembayaran.";
+    if (text.includes('pembayaran') || text.includes('bayar')) return "Kami menerima pembayaran via QRIS, Dana, GoPay, dan Transfer Bank.";
+    if (text.includes('panel')) return "Kami menyediakan Panel Pterodactyl murah mulai Rp 1.000.";
+    if (text.includes('vps')) return "VPS tersedia dengan spesifikasi beragam mulai Rp 15.000.";
+    if (text.includes('admin') || text.includes('owner')) return "Silakan hubungi WhatsApp Admin di 0822-2676-9163 untuk bantuan lebih lanjut.";
+    if (text.includes('halo') || text.includes('hai') || text.includes('p')) return "Halo! Ada yang bisa saya bantu terkait layanan hosting?";
+    return "Maaf, saya kurang mengerti. Bisa hubungi Admin via WhatsApp untuk respon cepat?";
+}
 
-    // If total is 0, hide the payment amount element to avoid showing "Nominal yang harus dibayar: Rp 0"
-    if (total === 0) {
-        paymentAmountElement.style.display = 'none';
-    } else {
-        paymentAmountElement.style.display = 'block';
-        paymentAmountElement.textContent = 'Nominal yang harus dibayar: ' + formatCurrency(total);
-    }
+async function getAIResponse(userMessage) {
+    const apiKey = 'AIzaSyB83yRApWuoMpXzYpmgawmugU70YftdBiE'; 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    // Also update or hide total-to-pay element accordingly
-    let totalToPayElement = document.getElementById('total-to-pay');
-    if (totalToPayElement) {
-        if (total === 0) {
-            totalToPayElement.style.display = 'none';
-            totalToPayElement.textContent = '';
-        } else {
-            totalToPayElement.style.display = 'block';
-            totalToPayElement.textContent = 'Total yang dibayar: ' + formatCurrency(total);
-        }
+    const requestBody = {
+        contents: [{
+            parts: [{
+                text: `Kamu adalah Customer Service 'ALFA Hosting'. Jawab pertanyaan ini dengan sopan dan singkat: "${userMessage}"`
+            }]
+        }]
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) throw new Error('API Error');
+
+        const data = await response.json();
+        const reply = data.candidates[0].content.parts[0].text;
+        return reply;
+
+    } catch (error) {
+        console.warn("AI Gagal/Sibuk, beralih ke Manual:", error);
+        return getFallbackResponse(userMessage); 
     }
 }
 
-// Enable/disable payment methods based on cart content
-function updatePaymentAvailability() {
-    if (cart.length === 0) {
-        paymentMethods.forEach(m => {
-            m.style.pointerEvents = 'none';
-            m.style.opacity = '0.5';
-        });
-        if (paymentSuccess) {
-            paymentSuccess.style.display = 'none';
-        }
-    } else {
-        paymentMethods.forEach(m => {
-            m.style.pointerEvents = 'auto';
-            m.style.opacity = '1';
-        });
-    }
-}
-
-// Process payment by sending cart data to backend /payment route
-function processPayment() {
-    if (cart.length === 0) {
-        alert('Keranjang belanja kosong. Silakan tambahkan layanan terlebih dahulu.');
-        return;
-    }
-
-    // Prepare data to send
-    const services = cart.map(item => ({
-        service: item.service,
-        price: item.price,
-        quantity: item.quantity
-    }));
-
-    // Removed username prompt as per request
-    const username = 'defaultUser'; // Set a default or generate username automatically
-    // Removed check for username input
-
-    // For ram, try to get from first cart item or default to '1gb'
-    let ram = '1gb';
-    if (cart.length > 0) {
-        // Try to extract ram from service name if possible
-        const ramMatch = cart[0].service.match(/(\d+gb)/i);
-        if (ramMatch) {
-            ram = ramMatch[1].toLowerCase();
-        }
-    }
-
-    // Send POST request to backend /payment
-    fetch('/payment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, ram })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Gagal memproses pembayaran.');
-        }
-        return response.text();
-    })
-    .then(html => {
-        // Replace current page content with payment page HTML
-        document.open();
-        document.write(html);
-        document.close();
-    })
-    .catch(error => {
-        showMessage(error.message, 'error');
-    });
-}
-
-// Add event listeners to order buttons and handle cart updates automatically
-orderButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const service = button.getAttribute('data-service');
-        const serviceItemDiv = button.closest('.service-item');
-        if (!serviceItemDiv) {
-            alert('Terjadi kesalahan: tidak dapat menemukan informasi layanan.');
-            return;
-        }
-        const priceHeading = serviceItemDiv.querySelector('h3');
-        if (!priceHeading) {
-            alert('Terjadi kesalahan: tidak dapat menemukan harga layanan.');
-            return;
-        }
-        const priceText = priceHeading.textContent;
-        const priceMatch = priceText.match(/Rp\.?\s*([\d\.]+)/i);
-        if (!priceMatch) {
-            alert('Terjadi kesalahan saat memproses harga layanan.');
-            return;
-        }
-
-        // Get selected specification if any
-        let spec = '';
-        let price = 0;
-        const specSelect = serviceItemDiv.querySelector('.spec-select');
-        if (specSelect) {
-            spec = specSelect.value;
-            // Extract price from selected option text, e.g. "Standard - Rp 600.000"
-            const selectedOptionText = specSelect.options[specSelect.selectedIndex].text;
-            const priceMatchSpec = selectedOptionText.match(/Rp\s*([\d\.]+)/i);
-            if (priceMatchSpec) {
-                price = parseInt(priceMatchSpec[1].replace(/\./g, ''));
-            } else {
-                price = parseInt(priceMatch[1].replace(/\./g, ''));
-            }
-        } else {
-            price = parseInt(priceMatch[1].replace(/\./g, ''));
-        }
-
-        // Compose full service name with spec if applicable
-        const fullServiceName = spec ? `${service} (${spec})` : service;
-
-        // Check if service with same spec already in cart
-        const existingIndex = cart.findIndex(item => item.service === fullServiceName);
-        if (existingIndex === -1) {
-            cart.push({ service: fullServiceName, price, quantity: 1 });
-        } else {
-            cart[existingIndex].quantity += 1;
-        }
-
-        showMessage(`Layanan "${fullServiceName}" berhasil ditambahkan ke keranjang.`, 'success');
-        updateCart();
-        saveCart();
-    });
-});
-
-// Back to top button functionality
-const backToTopButton = document.getElementById('back-to-top');
-if (backToTopButton) {
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            backToTopButton.style.display = 'block';
-        } else {
-            backToTopButton.style.display = 'none';
-        }
-    });
-
-    backToTopButton.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// Testimonial feature implementation
-document.addEventListener('DOMContentLoaded', () => {
-    // Load testimonials from localStorage
-    let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
-
-    const testimonialList = document.getElementById('testimonial-list');
-    const testimonialCount = document.getElementById('testimonial-count');
-    const testimonialForm = document.getElementById('testimonial-form');
-
-    // Function to render testimonials
-    function renderTestimonials() {
-        if (!testimonialList) return;
-        testimonialList.innerHTML = '';
-        testimonials.forEach(testimonial => {
-            const item = document.createElement('div');
-            item.className = 'testimonial-item';
-            item.style.marginBottom = '15px';
-            item.style.padding = '10px';
-            item.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-            item.style.borderRadius = '4px';
-
-            const textP = document.createElement('p');
-            textP.textContent = `"${testimonial.text}"`;
-            textP.style.color = 'black'; // Change testimonial text color to black
-            item.appendChild(textP);
-
-            const nameH4 = document.createElement('h4');
-            nameH4.textContent = `- ${testimonial.name}`;
-            nameH4.style.color = 'black'; // Change author name color to black
-            item.appendChild(nameH4);
-
-            testimonialList.appendChild(item);
-        });
-        if (testimonialCount) {
-            testimonialCount.textContent = testimonials.length;
-        }
-    }
-
-    // Initial render
-    renderTestimonials();
-
-    // Handle form submission
-    if (testimonialForm) {
-        testimonialForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nameInput = document.getElementById('testimonial-name');
-            const textInput = document.getElementById('testimonial-text');
-
-            const newTestimonial = {
-                name: nameInput ? nameInput.value.trim() : '',
-                text: textInput ? textInput.value.trim() : ''
-            };
-
-            if (newTestimonial.name && newTestimonial.text) {
-                testimonials.push(newTestimonial);
-                localStorage.setItem('testimonials', JSON.stringify(testimonials));
-                renderTestimonials();
-                if (testimonialForm) testimonialForm.reset();
-                alert('Terima kasih atas testimoni Anda!');
-            } else {
-                alert('Mohon isi nama dan testimoni dengan lengkap.');
-            }
-        });
-    }
-
-    // QRIS image modal functionality
-    const qrisImage = document.getElementById('qris-image');
-    const qrisModal = document.getElementById('qris-modal');
-    const modalClose = document.getElementById('modal-close');
-
-    function openModal() {
-        if (qrisModal) qrisModal.style.display = 'block';
-    }
-
-    function closeModal() {
-        if (qrisModal) qrisModal.style.display = 'none';
-    }
-
-    if (qrisImage) {
-        qrisImage.addEventListener('click', () => {
-            // Set modal image src to QRIS image src
-            const modalImg = document.getElementById('qris-modal-img');
-            if (modalImg) modalImg.src = qrisImage.src;
-
-            // Calculate total nominal amount from cart
-            let total = 0;
-            cart.forEach(item => {
-                total += item.price * (item.quantity || 1);
-            });
-
-            // Display total nominal amount in modal
-            const modalTotalAmount = document.getElementById('modal-total-amount');
-            if (modalTotalAmount) {
-                modalTotalAmount.textContent = 'Total Nominal: ' + formatCurrency(total);
-            }
-
-            // Show modal
-            openModal();
-        });
-    }
-
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-
-    if (qrisModal) {
-        qrisModal.addEventListener('click', (e) => {
-            if (e.target === qrisModal) {
-                closeModal();
-            }
-        });
-    }
-});
-
-// Automatically process QRIS payment on payment.html page
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.endsWith('payment.html')) {
-        const qrisMethod = Array.from(paymentMethods).find(m => m.getAttribute('title') === 'QRIS');
-        if (qrisMethod) {
-            // Hide other payment methods
-            paymentMethods.forEach(m => {
-                if (m !== qrisMethod) {
-                    m.style.display = 'none';
-                } else {
-                    m.style.display = 'inline-block';
-                }
-            });
-            // Automatically process QRIS payment
-            processPayment(qrisMethod);
-        }
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    updatePricesWithUSD();
-    loadCart();
-    updateCart();
-    updatePaymentAvailability();
-
-    // Cookie consent banner logic
-    const cookieBanner = document.getElementById('cookie-consent-banner');
-    const acceptBtn = document.getElementById('accept-cookies-btn');
-
-    function hasConsented() {
-        return localStorage.getItem('cookieConsent') === 'true';
-    }
-
-    function showBanner() {
-        if (cookieBanner) {
-            cookieBanner.style.display = 'flex';
-        }
-    }
-
-    function hideBanner() {
-        if (cookieBanner) {
-            cookieBanner.style.display = 'none';
-        }
-    }
-
-    if (!hasConsented()) {
-        showBanner();
-    } else {
-        hideBanner();
-    }
-
-    if (acceptBtn) {
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'true');
-            hideBanner();
-        });
-    }
-
-    // Add event listener for proceed to payment button
-    const proceedToPaymentBtn = document.getElementById('proceed-to-payment');
-    if (proceedToPaymentBtn) {
-        proceedToPaymentBtn.addEventListener('click', () => {
-            if (cart.length === 0) {
-                alert('Keranjang belanja kosong. Silakan tambahkan layanan terlebih dahulu sebelum melanjutkan ke pembayaran.');
-                return;
-            }
-            // Save cart before redirecting
-            saveCart();
-            // Instead of redirecting directly, call processPayment to get QRIS page from backend
-            processPayment();
-        });
-    }
-
-    if (window.location.pathname.endsWith('payment.html')) {
-        updatePaymentAmount();
-    }
+// --- 6. INIT UTAMA ---
+document.addEventListener('DOMContentLoaded', () => { 
+    trackVisitor(); 
+    renderProducts(); 
+    updateCart(); 
+    
+    const proceedBtn=document.getElementById('proceed-to-payment'); 
+    if(proceedBtn)proceedBtn.addEventListener('click',()=>{if(cart.length===0){alert('Kosong!');return;}window.location.href='payment.html';});
+    
+    const themeBtn=document.getElementById('theme-btn'); 
+    if(themeBtn){if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark-mode');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('dark-mode');localStorage.setItem('theme',document.body.classList.contains('dark-mode')?'dark':'light');});}
+    
+    const liveChatToggle=document.getElementById('live-chat-toggle'); const liveChat=document.getElementById('live-chat'); const liveChatClose=document.getElementById('live-chat-close'); const liveChatForm=document.getElementById('live-chat-form'); const liveChatInput=document.getElementById('live-chat-input'); const liveChatMessages=document.getElementById('live-chat-messages');
+    if(liveChatToggle)liveChatToggle.addEventListener('click',()=>{liveChat.style.display='flex';liveChatToggle.style.display='none';}); if(liveChatClose)liveChatClose.addEventListener('click',()=>{liveChat.style.display='none';liveChatToggle.style.display='block';});
+    
+    if(liveChatForm)liveChatForm.addEventListener('submit',async(e)=>{e.preventDefault();const m=liveChatInput.value.trim();if(!m)return;const u=document.createElement('div');u.textContent=m;u.style.cssText="background:#007bff;color:white;padding:8px;border-radius:10px;margin-bottom:5px;align-self:flex-end;max-width:80%;";liveChatMessages.appendChild(u);liveChatInput.value='';const l=document.createElement('div');l.textContent='...';liveChatMessages.appendChild(l);const r=await getAIResponse(m);liveChatMessages.removeChild(l);const b=document.createElement('div');b.textContent=r;b.style.cssText="background:#eee;color:black;padding:8px;border-radius:10px;margin-bottom:5px;align-self:flex-start;max-width:80%;";liveChatMessages.appendChild(b);liveChatMessages.scrollTop=liveChatMessages.scrollHeight;});
 });

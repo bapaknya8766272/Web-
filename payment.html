@@ -3,189 +3,137 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pembayaran - Layanan Hosting</title>
+    <title>Pembayaran Aman - ALFA Hosting</title>
     <link rel="icon" type="image/jpeg" href="alfa.jpg" />
     <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        .payment-methods {
-            background-color: #f9f9f9;
-            border: 2px solid #007BFF;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .payment-methods h3 {
-            color: #007BFF;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .payment-methods ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px 40px;
-            justify-content: center;
-            margin-top: 0;
-            margin-bottom: 20px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .payment-methods ul li {
-            background-color: #e6f0ff;
-            border: 1px solid #007BFF;
-            border-radius: 8px;
-            padding: 10px 15px;
-            min-width: 150px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 18px;
-            color: #004085;
-            box-shadow: 0 2px 5px rgba(0,123,255,0.2);
-            transition: background-color 0.3s ease;
-        }
-        .payment-methods ul li:hover {
-            background-color: #cce0ff;
-            cursor: default;
-        }
-        #payment-amount {
-            text-align: center;
-            color: #d6336c;
-            font-size: 20px;
-            font-weight: 900;
-            margin-top: 20px;
-        }
-        a#download-qris {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #007BFF;
-            text-decoration: none;
-        }
-        a#download-qris:hover {
-            text-decoration: underline;
-        }
+        body { font-family: 'Poppins', sans-serif; background: #f4f7fa; }
+        .payment-container { max-width: 800px; margin: 40px auto; background: #ffffff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; }
+        .payment-header { background: linear-gradient(135deg, #2980b9 0%, #2c3e50 100%); padding: 40px; color: white; text-align: center; position: relative; }
+        .payment-body { padding: 40px; }
+        .order-summary { background: #f8f9fa; border-radius: 15px; padding: 20px; margin-bottom: 30px; border: 1px solid #e9ecef; }
+        .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ddd; }
+        .summary-row:last-child { border-bottom: none; font-weight: 700; font-size: 1.2rem; color: #2c3e50; padding-top: 20px; }
+        .payment-methods-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .method-card { border: 2px solid #e9ecef; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .method-card:hover { border-color: #2980b9; background: #f0f7fb; transform: translateY(-5px); }
+        .method-card i { font-size: 2rem; color: #2980b9; margin-bottom: 10px; display: block; }
+        .btn-confirm { background: #27ae60; color: white; padding: 15px 40px; border-radius: 50px; font-size: 1.1rem; font-weight: 700; border: none; cursor: pointer; width: 100%; transition: 0.2s; }
+        .btn-confirm:hover { background: #219150; transform: scale(1.02); }
+        .qris-container { text-align: center; margin: 20px 0; padding: 20px; border: 2px dashed #2980b9; border-radius: 15px; }
+        .qris-img { max-width: 200px; width: 100%; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Pembayaran Layanan Hosting</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html#services">Layanan</a></li>
-                    <li><a href="index.html#cart">Keranjang</a></li>
-                    <li><a href="index.html#contact">Kontak</a></li>
-                </ul>
-            </nav>
+
+    <div class="payment-container">
+        <div class="payment-header">
+            <a href="index.html" style="position: absolute; left: 20px; top: 20px; color: white; font-size: 1.5rem;"><i class="fas fa-arrow-left"></i></a>
+            <h2><i class="fas fa-lock"></i> Pembayaran Aman</h2>
+            <p>Selesaikan pembayaran untuk mengaktifkan layanan Anda</p>
         </div>
-    </header>
 
-    <section id="payment" class="container">
-        <h2>Opsi Pembayaran</h2>
-        <p><strong>Pembayaran otomatis kini sudah tersedia. Silakan lanjutkan pembayaran menggunakan QRIS secara otomatis.</strong></p>
-        <div class="payment-methods">
-            <!-- Tempel QRIS Anda di sini -->
+        <div class="payment-body">
+            <div class="order-summary" id="order-summary"><p style="text-align:center;">Memuat...</p></div>
 
-            <ul>
-                <li>
-                    <span>Dana: 082226769163</span>
-                </li>
-                <li>
-                    <span>GoPay: 082226769163</span>
-                </li>
-                <li>
-                    <span>PayPal: freefiremax.underscore@gmail.com</span>
-                </li>
-                <li>
-                    <span>OVO: 082226769163</span>
-                </li>
-            </ul>
+            <h3 style="text-align:center; margin-bottom:20px;">Pilih Metode Pembayaran</h3>
+            
+            <div class="qris-container">
+                <p style="margin-bottom:10px; font-weight:bold;">Scan QRIS (Otomatis)</p>
+                <img src="qris.jpg" alt="QRIS" class="qris-img" onerror="this.src='https://via.placeholder.com/200x200?text=QRIS'">
+            </div>
 
-            <p><a id="download-qris" href="qris.jpg" download="qris-payment" style="display:inline-block; padding:10px 20px; background-color:#007BFF; color:#fff; border-radius:5px; font-weight:bold; text-decoration:none; transition: background-color 0.3s ease;">Download QRIS untuk Pembayaran</a></p>
+            <div class="payment-methods-grid">
+                <div class="method-card" onclick="copyText('082226769163')"><i class="fas fa-wallet"></i><span>DANA</span><br><small>0822-2676-9163</small></div>
+                <div class="method-card" onclick="copyText('082226769163')"><i class="fas fa-money-bill-wave"></i><span>GOPAY</span><br><small>0822-2676-9163</small></div>
+                <div class="method-card" onclick="copyText('082226769163')"><i class="fas fa-mobile-alt"></i><span>OVO</span><br><small>0822-2676-9163</small></div>
+            </div>
 
-            <button id="confirm-payment" style="display:block; margin: 20px auto 0; padding: 12px 25px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Konfirmasi Pembayaran & Kirim Bukti</button>
-
+            <div style="text-align:center; margin-top:30px;">
+                <button id="confirm-payment" class="btn-confirm"><i class="fab fa-whatsapp"></i> Konfirmasi & Kirim Bukti</button>
+                <p style="margin-top:15px; font-size:0.85rem; color:#888;">Stok akan otomatis berkurang setelah konfirmasi.</p>
+            </div>
         </div>
-        <p id="payment-amount" style="display:none; text-align:center; color:#d6336c; font-size:22px; font-weight:900; margin-top:30px;"></p>
-        <p id="total-to-pay" style="text-align:center; color:#198754; font-size:20px; font-weight:700; margin-top:10px;"></p>
-    </section>
+    </div>
 
+    <script src="scripts.js"></script>
+    
     <script>
-        document.getElementById('confirm-payment').addEventListener('click', function() {
-            // Retrieve cart from localStorage
+        function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('Nomor disalin: ' + text)); }
+
+        // 1. TAMPILKAN RINGKASAN PESANAN
+        document.addEventListener('DOMContentLoaded', function() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const summaryDiv = document.getElementById('order-summary');
+            
             if (cart.length === 0) {
-                alert('Keranjang kosong. Silakan tambahkan layanan terlebih dahulu.');
+                summaryDiv.innerHTML = '<p style="text-align:center;">Keranjang kosong. <a href="index.html">Kembali</a></p>';
+                document.getElementById('confirm-payment').style.display = 'none';
                 return;
             }
 
-            // Calculate total price from cart to ensure consistency
-            let totalPriceCalc = 0;
+            let html = ''; let total = 0;
             cart.forEach(item => {
-                totalPriceCalc += item.price * (item.quantity || 1);
+                let sub = item.price * item.quantity; total += sub;
+                html += `<div class="summary-row"><span>${item.service} (x${item.quantity})</span><span>Rp ${sub.toLocaleString('id-ID')}</span></div>`;
             });
-
-            // Build order details message
-            let message = 'Halo,i saya sudah melakukan pembayaran. Berikut detail pesanan saya:%0A';
-            cart.forEach(item => {
-                message += `- ${item.service} x${item.quantity} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
-            });
-
-            // Add total price using calculated total
-            message += `%0ATotal yang dibayar: Rp ${totalPriceCalc.toLocaleString('id-ID')}`;
-
-            // Add instruction for proof of payment
-            message += '%0ASaya juga mengirimkan bukti pembayaran sebagai konfirmasi. Terima kasih.';
-
-            // WhatsApp number (replace with actual number)
-            const waNumber = '6282226769163';
-
-            // Open WhatsApp chat with pre-filled message
-            const waUrl = `https://wa.me/${waNumber}?text=${message}`;
-            window.open(waUrl, '_blank');
-
-            // Optionally clear cart after redirect
-            localStorage.removeItem('cart');
-            localStorage.removeItem('totalPrice');
+            html += `<div class="summary-row total-row"><span>Total</span><span style="color:#27ae60;">Rp ${total.toLocaleString('id-ID')}</span></div>`;
+            summaryDiv.innerHTML = html;
         });
-    </script>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 ALFA Hosting. Hak cipta dilindungi.</p>
-        </div>
-    </footer>
+        // --- 2. LOGIKA KONFIRMASI (KURANGI STOK & SIMPAN) ---
+        document.getElementById('confirm-payment').addEventListener('click', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) { alert('Keranjang kosong.'); return; }
 
+            // Ambil Database Produk (dari localStorage atau default di scripts.js)
+            // Penting: scripts.js sudah diload, jadi defaultProducts tersedia jika localStorage kosong
+            let products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
 
-    <script src="scripts.js"></script>
-    <script>
-      // Override updateCart on payment.html to avoid errors due to missing cart table
-      if (window.location.pathname.endsWith('payment.html')) {
-        if (typeof updateCart === 'function') {
-          updateCart = function() {
-            if (typeof updatePaymentAmount === 'function') {
-              updatePaymentAmount();
-            }
-          };
-        }
-      }
+            // Update Stok
+            cart.forEach(cartItem => {
+                // Cari produk berdasarkan nama
+                let productIndex = products.findIndex(p => p.name === cartItem.service);
+                
+                if (productIndex !== -1) {
+                    // Jika produk ada dan punya stok (bukan Jasa), kurangi
+                    if (products[productIndex].category !== 'other') {
+                        let currentStock = parseInt(products[productIndex].stock) || 0;
+                        if (currentStock > 0) {
+                            products[productIndex].stock = currentStock - cartItem.quantity;
+                            if (products[productIndex].stock < 0) products[productIndex].stock = 0;
+                        }
+                    }
+                }
+            });
 
-      document.addEventListener('DOMContentLoaded', function() {
-        if (window.location.pathname.endsWith('payment.html')) {
-          if (typeof loadCart === 'function') {
-            loadCart();
-          } else if (typeof updatePaymentAmount === 'function') {
-            updatePaymentAmount();
-          }
-          console.log('localStorage cart:', localStorage.getItem('cart'));
-          console.log('localStorage totalPrice:', localStorage.getItem('totalPrice'));
-        }
-      });
+            // SIMPAN DATABASE BARU (Stok Berkurang)
+            localStorage.setItem('products', JSON.stringify(products));
+
+            // SIMPAN RIWAYAT PENJUALAN
+            const salesHistory = JSON.parse(localStorage.getItem('salesHistory')) || [];
+            cart.forEach(item => {
+                salesHistory.push({
+                    service: item.service, quantity: item.quantity, price: item.price, total: item.price * item.quantity,
+                    date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                });
+            });
+            localStorage.setItem('salesHistory', JSON.stringify(salesHistory));
+
+            // KIRIM WA
+            let msg = 'Halo Admin, Konfirmasi Pembayaran:%0A';
+            let total = 0;
+            cart.forEach(item => { msg += `📦 ${item.service} x${item.quantity}%0A`; total += item.price * item.quantity; });
+            msg += `%0A💰 Total: Rp ${total.toLocaleString('id-ID')}%0A%0AMohon diproses.`;
+            
+            // Buka WA
+            window.open(`https://wa.me/6282226769163?text=${msg}`, '_blank');
+
+            // Hapus Keranjang & Redirect
+            localStorage.removeItem('cart');
+            setTimeout(() => { window.location.href = 'index.html'; }, 500);
+        });
     </script>
 </body>
 </html>

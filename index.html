@@ -6,17 +6,20 @@
     <title>Layanan Hosting - VPS, Domain & Lainnya</title>
     <link rel="icon" type="image/jpeg" href="alfa.jpg" />
     <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>ALFA Hosting</h1>
+        <div class="container header-content">
+            <h1><i class="fas fa-server"></i> ALFA Hosting</h1>
             <nav>
                 <ul>
                     <li><a href="#services">Layanan</a></li>
+                    <li><a href="#cart">Keranjang <span id="cart-badge" style="background:red; padding:2px 6px; border-radius:10px; font-size:12px; display:none;">0</span></a></li>
                     <li><a href="#payment">Pembayaran</a></li>
                     <li><a href="#contact">Kontak</a></li>
+                    <li><button class="theme-toggle" id="theme-btn" title="Ganti Tema">🌙</button></li>
                 </ul>
             </nav>
         </div>
@@ -24,433 +27,109 @@
 
     <section id="hero">
         <div class="container">
-            <h2>Solusi Hosting Lengkap Anda Di ALFA HOSTING</h2>
-            <p>Dapatkan VPS andal, domain, dan layanan hosting lainnya dengan opsi pembayaran otomatis yang mudah.</p>
+            <h2>Solusi Hosting Lengkap & Terpercaya</h2>
+            <p>VPS Kencang, Panel Murah, dan Jasa IT Profesional. Garansi Uptime & Support Cepat.</p>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Cari layanan (misal: VPS 4GB)..." onkeyup="searchServices()">
+            </div>
         </div>
     </section>
 
     <section id="services" class="container">
-        <h3>Kebutuhan</h3>
-        <div class="service-list">
-            <!-- VPS Products -->
-            <div class="service-item">
-                <h3>BASIC - Rp 15.000,-</h3>
-                <p>1GB RAM<br>1CORE CPU<br>20GB DISK<br>1TB BANDWIDTH</p>
-                <button class="order-btn" data-service="BASIC VPS 1">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC - Rp 25.000,-</h3>
-                <p>2GB RAM<br>1CORE CPU<br>50GB DISK<br>2TB BANDWIDTH</p>
-                <button class="order-btn" data-service="BASIC VPS 2">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC - Rp 30.000,-</h3>
-                <p>2GB RAM<br>2CORE CPU<br>50GB DISK<br>2TB BANDWIDTH</p>
-                <button class="order-btn" data-service="BASIC VPS 3">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>Standard - Rp 35.000,-</h3>
-                <p>4GB RAM<br>2CORE CPU<br>80GB DISK<br>4TB BANDWIDTH</p>
-                <button class="order-btn" data-service="Standard VPS">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>Hight - Rp 45.000,-</h3>
-                <p>8GB RAM<br>4CORE CPU<br>160GB DISK<br>5TB BANDWIDTH</p>
-                <button class="order-btn" data-service="Hight VPS 1">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>Hight - Rp 70.000,-</h3>
-                <p>16GB RAM<br>4CORE CPU<br>240GB DISK<br>5TB BANDWIDTH</p>
-                <button class="order-btn" data-service="Hight VPS 2">BELI</button>
-            </div>
+        <div style="margin-bottom: 20px; display:inline-block; background:#d4edda; color:#155724; padding:5px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem;">
+            <i class="fas fa-check-circle"></i> Server Online (100% Uptime)
         </div>
 
-        <h3>PANEL</h3>
-        <div class="service-list">
-            <!-- BASIC PANEL -->
-            <div class="service-item">
-                <h3>BASIC 1 - Rp 1.000,-</h3>
-                <p>1GB RAM<br>35% CPU<br>1GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 1">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 2 - Rp 2.000,-</h3>
-                <p>2GB RAM<br>50% CPU<br>2GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 2">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 3 - Rp 3.000,-</h3>
-                <p>3GB RAM<br>95% CPU<br>3GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 3">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 4 - Rp 4.000,-</h3>
-                <p>4GB RAM<br>110% CPU<br>4GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 4">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 5 - Rp 5.000,-</h3>
-                <p>5GB RAM<br>135% CPU<br>5GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 5">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 6 - Rp 6.000,-</h3>
-                <p>6GB RAM<br>160% CPU<br>6GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 6">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 7 - Rp 7.000,-</h3>
-                <p>7GB RAM<br>185% CPU<br>7GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 7">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 8 - Rp 8.000,-</h3>
-                <p>8GB RAM<br>200% CPU<br>8GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 8">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASIC 9 - Rp 9.000,-</h3>
-                <p>9GB RAM<br>300% CPU<br>9GB DISK</p>
-                <button class="order-btn" data-service="BASIC PANEL 9">BELI</button>
-            </div>
+        <h3><i class="fas fa-hdd"></i> VPS CLOUD</h3>
+        <div class="service-list" id="vps-list"></div>
 
-            <!-- PREMIUM PANEL -->
-            <div class="service-item recommend">
-                <h3>PREMIUM 1 - Rp 10.000,-</h3>
-                <p>UNLIMITED RAM<br>UNLIMITED CPU<br>UNLIMITED DISK</p>
-                <button class="order-btn" data-service="PREMIUM PANEL 1">BELI</button>
-            </div>
-            <div class="service-item recommend">
-                <h3>PREMIUM 2 - Rp 15.000,-</h3>
-                <p>RESELLER PANEL<br>BISA OPEN JUAL PANEL<br>AUTO BALIK MODAL</p>
-                <button class="order-btn" data-service="PREMIUM PANEL 2">BELI</button>
-            </div>
-            <div class="service-item recommend">
-                <h3>PREMIUM 3 - Rp 20.000,-</h3>
-                <p>ADMIN PANEL<br>BISA OPEN RESELLER PANEL<br>BISA JUAL PANEL<br>AUTO BALIK MODAL</p>
-                <button class="order-btn" data-service="PREMIUM PANEL 3">BELI</button>
-            </div>
-            <div class="service-item recommend">
-                <h3>PREMIUM 4 - Rp 25.000,-</h3>
-                <p>OWNER PANEL<br>BISA OPEN ADMIN PANEL<br>BISA OPEN RESELLER PANEL<br>BISA JUAL PANEL<br>AUTO BALIK MODAL</p>
-                <button class="order-btn" data-service="PREMIUM PANEL 4">BELI</button>
-            </div>
-            <div class="service-item recommend">
-                <h3>PREMIUM 5 - Rp 35.000,-</h3>
-                <p>PT PANEL<br>BISA OPEN OWNER PANEL<br>BISA OPEN ADMIN PANEL<br>BISA OPEN RESELLER PANEL<br>BISA JUAL PANEL<br>AUTO BALIK MODAL</p>
-                <button class="order-btn" data-service="PREMIUM PANEL 5">BELI</button>
-            </div>
-        </div>
-        <h3>JUAL LAINNYA</h3>
-        <div class="service-list">
-            <div class="service-item">
-                <h3>JASA INSTALL PANEL - Rp 10.000,-</h3>
-                <button class="order-btn" data-service="JASA INSTALL PANEL">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>BASH+TOKEN INSTALL PANEL - Rp 15.000,-</h3>
-                <button class="order-btn" data-service="BASH+TOKEN INSTALL PANEL">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>FIX ERROR SC BOT - Rp 7.000,-</h3>
-                <button class="order-btn" data-service="FIX ERROR SC BOT">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>JASA RENAME SC - Rp 20.000,-</h3>
-                <button class="order-btn" data-service="JASA RENAME SC">BELI</button>
-            </div>
-            <div class="service-item">
-                <h3>JASA BUAT WEBSITE - Rp 30.000,-</h3>
-                <button class="order-btn" data-service="JASA BUAT WEBSITE">BELI</button>
-            </div>
-        </div>
+        <h3><i class="fas fa-cogs"></i> PANEL PTERODACTYL</h3>
+        <div class="service-list" id="panel-list"></div>
+
+        <h3><i class="fas fa-tools"></i> JASA & ADDONS</h3>
+        <div class="service-list" id="other-list"></div>
     </section>
 
     <section id="cart" class="container">
-        <h2>Keranjang Belanja</h2>
-        <table id="cart-table" border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
+        <h2><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h2>
+        <table id="cart-table">
             <thead>
-                <tr>
-                    <th>Layanan</th>
-                    <th>Jumlah</th>
-                    <th>Harga (Rp)</th>
-                    <th>Aksi</th>
-                </tr>
+                <tr><th>Layanan</th><th>Jumlah</th><th>Harga</th><th>Aksi</th></tr>
             </thead>
-            <tbody>
-                <!-- Item akan ditambahkan secara dinamis -->
-            </tbody>
+            <tbody></tbody>
             <tfoot>
-                <tr>
-                    <td colspan="2" style="text-align:right;"><strong>Total Harga:</strong></td>
-                    <td id="total-price" colspan="2">Rp 0</td>
-                </tr>
+                <tr><td colspan="2" style="text-align:right;"><strong>Total:</strong></td><td id="total-price" colspan="2">Rp 0</td></tr>
             </tfoot>
         </table>
-        <button id="proceed-to-payment" style="margin-top: 15px; padding: 10px 20px; font-size: 16px;">Lanjutkan ke Pembayaran</button>
-    </section>
-
-    <section id="payment" class="container">
-        <h2>Opsi Pembayaran</h2>
-        <p>Silakan lanjutkan ke halaman <a href="payment.html">Pembayaran</a> untuk memilih metode pembayaran dan menyelesaikan transaksi Anda.</p>
+        <button id="proceed-to-payment" class="order-btn" style="background: var(--accent); margin-top:20px;">Lanjutkan ke Pembayaran <i class="fas fa-arrow-right"></i></button>
     </section>
 
     <section id="contact" class="container">
         <h2>Hubungi Kami</h2>
-        <div class="personal-info">
-            <h3>Informasi Pribadi</h3>
-            <p>Alamat: Jawa Tengah,Blora,Randublatung </p>
-            <p>Nomor WA: +62 822-2676-9163</p>
-            <div style="margin-top: 15px;">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.1234567890123!2d110.1234567890123!3d-7.1234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a1234567890ab%3A0x1234567890abcdef!2sJl.%20Contoh%20Alamat%20No.123%2C%20Kota%20Contoh%2C%20Provinsi%20Contoh!5e0!3m2!1sid!2sid!4v1234567890123!5m2!1sid!2sid"
-                    width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+        <div class="personal-info" style="text-align:center;">
+            <p><strong>Alamat:</strong> Jawa Tengah, Blora, Randublatung</p>
+            <p><i class="fab fa-whatsapp"></i> +62 822-2676-9163</p>
+            <p><i class="fas fa-envelope"></i> sanzbot938@gmail.com</p>
+            <div style="margin-top: 25px; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.1234567890123!2d110.1234567890123!3d-7.1234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a1234567890ab%3A0x1234567890abcdef!2sJl.%20Contoh%20Alamat%20No.123%2C%20Kota%20Contoh%2C%20Provinsi%20Contoh!5e0!3m2!1sid!2sid!4v1234567890123!5m2!1sid!2sid" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
-        <p>Untuk pertanyaan dan dukungan, silakan email kami di <a href="mailto:support@hostingservices.com">sanzbot938@gmail.com</a>. <!-- GANTI DENGAN EMAIL ANDA --></p>
-    </section>
-
-    <section id="testimonials" class="container" style="background-color: #007bff; color: white; padding: 20px; border-radius: 5px;">
-        <h2 style="color: white;">Testimoni Pelanggan</h2>
-        <p><strong>Jumlah pelanggan yang memberikan testimoni: <span id="testimonial-count">200</span></strong></p>
-        <div class="testimonial-list" id="testimonial-list">
-            <div class="testimonial-item">
-                <p>"Layanan VPS sangat cepat dan stabil. Sangat puas dengan dukungan teknisnya!"</p>
-                <h4>- Budi Santoso</h4>
-            </div>
-            <div class="testimonial-item">
-                <p>"Pendaftaran domain mudah dan harga kompetitif. Sangat direkomendasikan."</p>
-                <h4>- Sari Dewi</h4>
-            </div>
-            <div class="testimonial-item">
-                <p>"Backup cloud membuat saya tenang karena data selalu aman."</p>
-                <h4>- Andi Wijaya</h4>
-            </div>
-        </div>
-        <h3 style="margin-top: 30px;">Berikan Testimoni Anda</h3>
-        <form id="testimonial-form" style="margin-top: 15px;">
-            <label for="testimonial-name">Nama:</label><br />
-            <input type="text" id="testimonial-name" name="testimonial-name" required style="width: 100%; padding: 8px; margin-bottom: 10px;" /><br />
-            <label for="testimonial-text">Testimoni:</label><br />
-            <textarea id="testimonial-text" name="testimonial-text" rows="4" required style="width: 100%; padding: 8px; margin-bottom: 10px;"></textarea><br />
-            <button type="submit" style="background-color: #0056b3; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Kirim Testimoni</button>
-        </form>
-    </section>
-
-    <section id="terms" class="container" style="background-color: #f9f9f9; padding: 30px 20px; border-radius: 10px; margin-bottom: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <h2>Syarat dan Ketentuan</h2>
-        <p>Selamat datang di ALFA Hosting. Dengan menggunakan layanan kami, Anda setuju dengan syarat dan ketentuan berikut:</p>
-        <ol>
-            <li>Layanan kami disediakan "sebagaimana adanya" tanpa jaminan apapun.</li>
-            <li>Pengguna bertanggung jawab atas penggunaan layanan sesuai hukum yang berlaku.</li>
-            <li>ALFA Hosting berhak mengubah syarat dan ketentuan kapan saja tanpa pemberitahuan sebelumnya.</li>
-            <li>Segala bentuk penyalahgunaan layanan akan ditindak sesuai hukum.</li>
-            <li>Informasi pribadi pengguna akan dilindungi sesuai kebijakan privasi kami.</li>
-            <li>Harga dan spesifikasi layanan dapat berubah sewaktu-waktu.</li>
-            <li>ALFA Hosting tidak bertanggung jawab atas kerugian langsung atau tidak langsung akibat penggunaan layanan.</li>
-        </ol>
-        <p>Jika Anda tidak setuju dengan syarat dan ketentuan ini, harap jangan menggunakan layanan kami.</p>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 ALFA Hosting. Hak cipta dilindungi.</p>
-            <p style="text-align:center; margin-top:10px;">
-                <a href="admin.html" style="color:#2980b9; font-weight:700; text-decoration:none;">Admin Dashboard</a>
+            <p>© 2026 ALFA Hosting. Hak cipta dilindungi.</p>
+            <p>
+                <a href="terms.html" style="color: #bdc3c7; margin-right: 15px;">Syarat & Ketentuan</a>
+                <a href="admin.html" style="color: #bdc3c7;">Login Admin</a>
             </p>
         </div>
     </footer>
 
-    <button id="back-to-top" aria-label="Kembali ke atas">&#8679;</button>
+    <div id="product-detail-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeDetailModal()">&times;</span>
+            <h2 id="modal-prod-name">Nama Produk</h2>
+            <div id="modal-prod-price" style="color:#27ae60; font-size:1.5rem; font-weight:bold; margin-bottom:15px;">Rp 0</div>
+            <div class="modal-body">
+                <p id="modal-prod-desc" style="white-space: pre-line;">Deskripsi...</p>
+                <div style="background:#f9f9f9; padding:10px; border-radius:8px; margin-top:15px; font-size:0.9rem;">
+                    <strong><i class="fas fa-info-circle"></i> Info:</strong><br>
+                    Garansi 3 Hari. Support Full. Proses Cepat.
+                </div>
+            </div>
+            <button id="modal-add-btn" class="order-btn" style="margin-top:20px;">+ MASUKKAN KERANJANG</button>
+        </div>
+    </div>
 
-    <!-- Live Chat Widget -->
-    <div id="live-chat" style="position: fixed; bottom: 20px; left: 20px; width: 300px; max-width: 100%; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none; flex-direction: column; font-family: Arial, sans-serif; z-index: 10000;">
-<div id="live-chat-header" style="background-color: #007BFF; color: white; padding: 10px; cursor: pointer; border-top-left-radius: 8px; border-top-right-radius: 8px; display: flex; align-items: center; gap: 10px;">
-    <img src="alfa.jpg" alt="Logo ALFA" style="height: 24px; width: 24px; border-radius: 4px;" />
-    Chat dengan Kami <span id="live-chat-close" style="margin-left: auto; cursor: pointer;">&times;</span>
-</div>
-        <div id="live-chat-messages" style="padding: 10px; height: 200px; overflow-y: auto; background: #f9f9f9; flex-grow: 1;"></div>
+    <a href="https://wa.me/6282226769163" target="_blank" class="float-wa" title="Chat WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div id="live-chat" style="position: fixed; bottom: 90px; left: 20px; width: 300px; max-width: 90%; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 9999;">
+        <div id="live-chat-header" style="background-color: var(--primary); color: white; padding: 10px; cursor: pointer; border-radius: 8px 8px 0 0; display: flex; align-items: center;">
+            <img src="alfa.jpg" style="height:24px; width:24px; margin-right:10px; border-radius:50%;"> CS ALFA AI
+            <span id="live-chat-close" style="margin-left: auto;">×</span>
+        </div>
+        <div id="live-chat-messages" style="padding: 10px; height: 250px; overflow-y: auto; background: #f9f9f9;"></div>
         <form id="live-chat-form" style="display: flex; border-top: 1px solid #ccc;">
-            <input type="text" id="live-chat-input" placeholder="Ketik pesan..." style="flex-grow: 1; border: none; padding: 10px; font-size: 14px;" autocomplete="off" />
-            <button type="submit" style="background-color: #007BFF; color: white; border: none; padding: 10px 15px; cursor: pointer;">Kirim</button>
+            <input type="text" id="live-chat-input" placeholder="Tanya bot..." style="flex:1; border:none; padding:10px;" autocomplete="off">
+            <button type="submit" style="background:var(--primary); color:white; border:none; padding:0 15px;">></button>
         </form>
     </div>
+    <button id="live-chat-toggle" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--primary); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 10001;">💬</button>
 
-    <button id="live-chat-toggle" style="position: fixed; bottom: 20px; left: 20px; background-color: #007BFF; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 10001;" aria-label="Buka chat">
-        &#9993;
-    </button>
-
-    <script src="scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        /* Chat message styles */
-        #live-chat-messages div {
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 12px;
-            max-width: 80%;
-            clear: both;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-        .user-message {
-            background-color: #007BFF;
-            color: white;
-            float: right;
-            text-align: right;
-            position: relative;
-        }
-        .bot-message {
-            background-color: #f1f0f0;
-            color: #333;
-            float: left;
-            text-align: left;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .bot-message img.bot-logo {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-            border-radius: 50%;
-        }
-        /* Typing animation */
-        .typing-indicator {
-            font-style: italic;
-            color: #666;
-            margin-left: 32px;
-        }
-    </style>
-
+    <script src="scripts.js"></script>
     <script>
-        // Live Chat Widget Script with AI Gemini integration and bot logo + typing animation
-        const liveChat = document.getElementById('live-chat');
-        const liveChatToggle = document.getElementById('live-chat-toggle');
-        const liveChatClose = document.getElementById('live-chat-close');
-        const liveChatForm = document.getElementById('live-chat-form');
-        const liveChatInput = document.getElementById('live-chat-input');
-        const liveChatMessages = document.getElementById('live-chat-messages');
-
-        liveChatToggle.addEventListener('click', () => {
-            liveChat.style.display = 'flex';
-            liveChatToggle.style.display = 'none';
-            liveChatInput.focus();
-        });
-
-        liveChatClose.addEventListener('click', () => {
-            liveChat.style.display = 'none';
-            liveChatToggle.style.display = 'block';
-        });
-
-        async function getAIResponse(message) {
-            const apiKey = 'AIzaSyAcw-ysgS7yMb2hkhasMPlkwbi35axU-cY'; // Replace with your actual AI Gemini API key
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`; // Using generateContent endpoint
-
-            try {
-                const response = await axios.post(endpoint, {
-                    contents: [
-                        {
-                            parts: [
-                                { text: message }
-                            ]
-                        }
-                    ]
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                console.log('AI Gemini API response:', response.data);
-
-                // Adjust this according to AI Gemini API response structure
-                console.log('AI Gemini API response candidates[0].content:', response.data.candidates[0].content);
-                let aiMessage = 'Maaf, tidak ada respons dari AI Gemini.';
-                if (response.data.candidates && response.data.candidates.length > 0) {
-                    const content = response.data.candidates[0].content;
-                    if (typeof content === 'string') {
-                        aiMessage = content;
-                    } else if (typeof content === 'object' && content !== null) {
-                        // Try to extract text property or join parts if available
-                        if (content.text) {
-                            aiMessage = content.text;
-                        } else if (Array.isArray(content.parts)) {
-                            aiMessage = content.parts.map(part => part.text || '').join('');
-                        } else {
-                            aiMessage = JSON.stringify(content);
-                        }
-                    } else {
-                        aiMessage = String(content);
-                    }
-                }
-                return aiMessage;
-            } catch (error) {
-                console.error('Error fetching AI Gemini response:', error);
-                let errorMessage = 'bot: Maaf, terjadi kesalahan saat memproses permintaan Anda.';
-                if (error.response && error.response.data) {
-                    if (typeof error.response.data === 'string') {
-                        errorMessage = `bot: ${error.response.data}`;
-                    } else if (error.response.data.error && error.response.data.error.message) {
-                        errorMessage = `bot: ${error.response.data.error.message}`;
-                    }
-                }
-                return errorMessage;
-            }
+        function searchServices() {
+            let input = document.getElementById('search-input').value.toLowerCase();
+            let items = document.querySelectorAll('.service-item');
+            items.forEach(item => {
+                let text = item.innerText.toLowerCase();
+                item.style.display = text.includes(input) ? 'flex' : 'none';
+            });
         }
-
-        liveChatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const message = liveChatInput.value.trim();
-            if (message === '') return;
-
-            // Display user message with user icon
-            const userMessage = document.createElement('div');
-            userMessage.classList.add('user-message');
-            userMessage.textContent = message;
-            liveChatMessages.appendChild(userMessage);
-
-            liveChatInput.value = '';
-            liveChatMessages.scrollTop = liveChatMessages.scrollHeight;
-
-            // Show typing indicator
-            const typingIndicator = document.createElement('div');
-            typingIndicator.classList.add('bot-message');
-typingIndicator.innerHTML = '<img src="alfa.jpg" alt="Bot" class="bot-logo" /> <span class="typing-indicator">Bot sedang mengetik...</span>';
-            liveChatMessages.appendChild(typingIndicator);
-            liveChatMessages.scrollTop = liveChatMessages.scrollHeight;
-
-            // Get AI response
-            const botReply = await getAIResponse(message);
-
-            // Remove typing indicator
-            liveChatMessages.removeChild(typingIndicator);
-
-            // Display bot message with bot logo
-            const botMessage = document.createElement('div');
-            botMessage.classList.add('bot-message');
-            const botLogo = document.createElement('img');
-botLogo.src = 'alfa.jpg'; // Make sure to add alfa.jpg to your project
-            botLogo.alt = 'Bot';
-            botLogo.classList.add('bot-logo');
-            botMessage.appendChild(botLogo);
-
-            const botText = document.createElement('span');
-            botText.textContent = botReply;
-            botMessage.appendChild(botText);
-
-            liveChatMessages.appendChild(botMessage);
-            liveChatMessages.scrollTop = liveChatMessages.scrollHeight;
-        });
     </script>
-    <!-- Cookie Consent Banner -->
-    <div id="cookie-consent-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: #222; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10000; font-family: Arial, sans-serif; font-size: 14px; box-shadow: 0 -2px 8px rgba(0,0,0,0.3);">
-        <div>
-            Kami menggunakan cookie untuk meningkatkan pengalaman Anda di situs ini. Dengan melanjutkan menggunakan situs ini, Anda menyetujui <a href="#terms" style="color: #4CAF50; text-decoration: underline;">Syarat dan Ketentuan</a> kami.
-        </div>
-        <button id="accept-cookies-btn" style="background-color: #4CAF50; border: none; color: white; padding: 8px 15px; cursor: pointer; border-radius: 4px; font-weight: bold;">Terima</button>
-    </div>
-
-    </body>
+</body>
 </html>
