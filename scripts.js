@@ -1,4 +1,4 @@
-// --- 1. DATABASE PRODUK DEFAULT (LENGKAP + STOK) ---
+// --- 1. DATABASE PRODUK LENGKAP (DENGAN STOK) ---
 const defaultProducts = [
     // === VPS (Ada Stok) ===
     { 
@@ -251,7 +251,7 @@ function openDetailModal(product) {
 function closeDetailModal() { document.getElementById('product-detail-modal').style.display='none'; }
 window.onclick = function(e) { const m = document.getElementById('product-detail-modal'); if(e.target==m) m.style.display="none"; }
 
-// --- 5. CHATBOT HYBRID (MANUAL FALLBACK + AI) ---
+// --- 5. CHATBOT HYBRID (VERCEL READY) ---
 function getFallbackResponse(text) {
     text = text.toLowerCase();
     if (text.includes('harga') || text.includes('biaya')) return "Untuk harga lengkap, silakan cek daftar layanan di halaman utama website kami.";
@@ -264,33 +264,26 @@ function getFallbackResponse(text) {
     return "Maaf, saya kurang mengerti. Bisa hubungi Admin via WhatsApp untuk respon cepat?";
 }
 
+// FUNGSI INI SUDAH DIUPDATE UNTUK VERCEL (MENGHUBUNGI /API/GEMINI)
 async function getAIResponse(userMessage) {
-    const apiKey = 'AIzaSyB83yRApWuoMpXzYpmgawmugU70YftdBiE'; 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    const requestBody = {
-        contents: [{
-            parts: [{
-                text: `Kamu adalah Customer Service 'ALFA Hosting'. Jawab pertanyaan ini dengan sopan dan singkat: "${userMessage}"`
-            }]
-        }]
-    };
-
     try {
-        const response = await fetch(url, {
+        // Panggil endpoint Vercel Serverless Function
+        const response = await fetch('/api/gemini', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify({ message: userMessage })
         });
 
-        if (!response.ok) throw new Error('API Error');
+        if (!response.ok) {
+            throw new Error('Gagal menghubungi server AI');
+        }
 
         const data = await response.json();
-        const reply = data.candidates[0].content.parts[0].text;
-        return reply;
+        return data.reply;
 
     } catch (error) {
-        console.warn("AI Gagal/Sibuk, beralih ke Manual:", error);
+        console.warn("AI Gagal/Sibuk (Fallback ke Manual):", error);
+        // Jika server error (misal belum di-deploy), otomatis pakai manual
         return getFallbackResponse(userMessage); 
     }
 }
