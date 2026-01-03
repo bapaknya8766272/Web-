@@ -1,6 +1,6 @@
 // api/gemini.js
 module.exports = async (req, res) => {
-    // 1. Validasi Pesan
+    // 1. Validasi Input
     const { message } = req.body || {};
     if (!message) {
         return res.status(400).json({ reply: "Pesan tidak boleh kosong." });
@@ -9,20 +9,32 @@ module.exports = async (req, res) => {
     // 2. Cek API Key
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-        return res.status(500).json({ reply: "Error: API Key belum di-setting di Vercel Settings!" });
+        return res.status(500).json({ reply: "Error: API Key belum di-setting di Vercel!" });
     }
 
-    // --- FUNGSI PEMANGGIL GOOGLE AI ---
-    async function callGoogleAI(modelName, apiVersion) {
-        const url = `https://generativelanguage.googleapis.com/${apiVersion}/models/${modelName}:generateContent?key=${apiKey}`;
+    // --- DAFTAR MODEL YANG AKAN DICOBA (Urutan Prioritas) ---
+    // Kita pakai 'v1beta' karena ini versi paling kompatibel saat ini
+    const modelsToTry = [
+        "gemini-1.5-flash",       // Paling baru & cepat
+        "gemini-1.5-flash-latest",// Alternatif nama flash
+        "gemini-1.5-pro",         // Versi pro terbaru
+        "gemini-1.0-pro",         // Versi stabil lama
+        "gemini-pro"              // Nama alias lama
+    ];
+
+    // Fungsi untuk memanggil API
+    async function tryModel(modelName) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
         
+        console.log(`Mencoba model: ${modelName}...`);
+
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `Kamu adalah Customer Service 'ALFA Hosting'. Jawab pertanyaan ini dengan sopan dan singkat: "${message}"`
+                        text: `Kamu adalah Customer Service 'ALFA Hosting'. Jawab pertanyaan ini dengan sopan, singkat, dan bahasa Indonesia: "${message}"`
                     }]
                 }]
             })
@@ -30,45 +42,39 @@ module.exports = async (req, res) => {
 
         const data = await response.json();
 
-        // Jika error, lempar ke catch
+        // Jika Google kasih error, lempar ke catch
         if (data.error) {
-            throw new Error(data.error.message || "Google API Error");
+            throw new Error(data.error.message || `Gagal di model ${modelName}`);
         }
 
-        // Jika sukses, kembalikan teks
+        // Jika sukses, ambil teksnya
         if (data.candidates && data.candidates.length > 0) {
             return data.candidates[0].content.parts[0].text;
         }
         
-        throw new Error("Tidak ada balasan dari AI.");
+        throw new Error("Bot tidak memberikan balasan.");
     }
 
-    // --- LOGIKA UTAMA (COBA SATU PER SATU) ---
-    try {
-        // PERCOBAAN 1: Pakai Model Terbaru (Gemini 1.5 Flash) di v1beta
+    // --- LOGIKA UTAMA (LOOPING) ---
+    for (const model of modelsToTry) {
         try {
-            console.log("Mencoba Gemini 1.5 Flash...");
-            const reply = await callGoogleAI('gemini-1.5-flash', 'v1beta');
+            // Coba model saat ini
+            const reply = await tryModel(model);
+            
+            // Jika berhasil, langsung kirim jawaban dan STOP looping
+            console.log(`BERHASIL menggunakan model: ${model}`);
             return res.status(200).json({ reply });
-        } catch (e) {
-            console.warn("Gagal pakai Flash, mencoba Pro...", e.message);
-        }
 
-        // PERCOBAAN 2: Jika Flash gagal, Pakai Model Stabil (Gemini Pro) di v1
-        try {
-            console.log("Mencoba Gemini Pro...");
-            const reply = await callGoogleAI('gemini-pro', 'v1');
-            return res.status(200).json({ reply });
-        } catch (e) {
-            console.warn("Gagal pakai Pro...", e.message);
-            throw e; // Lempar error terakhir
+        } catch (error) {
+            // Jika gagal, lanjut ke model berikutnya
+            console.warn(`Gagal pakai ${model}: ${error.message}`);
+            continue; 
         }
-
-    } catch (error) {
-        console.error("SEMUA MODEL GAGAL:", error);
-        // Fallback terakhir: Pesan manual agar user tidak kecewa
-        return res.status(200).json({ 
-            reply: "Maaf, sistem AI sedang sibuk. Silakan hubungi Admin via WhatsApp untuk respon cepat." 
-        });
     }
+
+    // --- JIKA SEMUA MODEL GAGAL ---
+    console.error("SEMUA MODEL GAGAL.");
+    return res.status(200).json({ 
+        reply: "Maaf, sistem AI sedang sibuk (Semua model overload). Silakan hubungi Admin via WhatsApp." 
+    });
 };
